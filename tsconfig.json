@@ -2,7 +2,7 @@
   "compilerOptions": {
     "target": "ES2020",
     "lib": ["DOM", "DOM.Iterable", "ES2020"],
-    "module": "CommonJS", // which system for the program AMD, UMD, System, CommonJS
+    "module": "CommonJS",
     "moduleResolution": "nodenext",
     "resolveJsonModule": true,
     "allowJs": true,
@@ -10,7 +10,7 @@
 
     /* EMIT RULES */
     "outDir": "./dist",
-    "noEmit": true, // TSUP takes care of emitting js for us, in a MUCH faster way
+    "noEmit": true,
     "declaration": true,
     "declarationMap": true,
     "sourceMap": true,
@@ -37,6 +37,6 @@
     "src/**/*.ts",
     "src/**/*.d.ts",
     "src/**/*.tsx"
-  ], // which files to compile
+  ],
   "exclude": ["node_modules"] // which files to skip
 }

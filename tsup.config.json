@@ -1,0 +1,11 @@
+{
+  "entryPoints": ["src/index.ts"],
+  "splitting": true,
+  "format": ["esm", "cjs"],
+  "dts": true,
+  "clean": true,
+  "sourcemap": true,
+  "minify": true,
+  "outDir": "dist",
+  "target": "es2020"
+}
