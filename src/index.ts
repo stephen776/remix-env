@@ -1,21 +1,17 @@
 import z, { ZodObject, type ZodType } from 'zod';
 
+if (typeof window !== 'undefined')
+  throw new Error('You must not import createEnv on the client.');
+
 export type Options<T extends Record<string, ZodType>> = {
   env: T;
 };
 
 export function createEnv<
   T extends Record<string, ZodType> = NonNullable<unknown>
->(opts: Options<T>): z.infer<ZodObject<T>> {
+>(opts: Options<T>) {
   const schema = z.object(typeof opts.env === 'object' ? opts.env : {});
-
-  // given the keys in our schema, get the values from process.env
-  const envirmonment = Object.keys(schema.shape).map((key) => {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-return
-    return process.env[key];
-  });
-
-  const parsed = schema.safeParse(envirmonment);
+  const parsed = schema.safeParse(process.env);
 
   if (parsed.success === false) {
     console.error(
@@ -26,14 +22,5 @@ export function createEnv<
     throw new Error('Invalid envirmonment variables');
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-return, @typescript-eslint/no-explicit-any
-  return parsed.data as any;
+  return parsed.data as z.infer<ZodObject<T>>;
 }
-
-const test = createEnv({
-  env: {
-    TEST_VARIABLE: z.string()
-  }
-});
-
-console.log({ test });
